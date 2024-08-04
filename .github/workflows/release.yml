@@ -60,6 +60,7 @@ jobs:
       - name: Run build
         run: |
           cd cmd
+          go mod tidy
           go build -ldflags="-s -w" -o esptool
 
       - name: Set [win] namespace
