@@ -1,0 +1,7 @@
+
+/vendor/
+/Godeps/
+
+*.bin
+*.app
+*.exe
