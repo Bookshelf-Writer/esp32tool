@@ -5,7 +5,7 @@ name: Release build
 on:
   release:
     branches:
-      - 'master'
+      - 'main'
     types: [created]
 
 jobs:
@@ -98,4 +98,4 @@ jobs:
           git add ./_run/values/ver.txt
 
           git commit -m "actions [$new_version] "$'\n'"Build: [${{ env.BUILD_VER }}] >> [$new_version]"
-          git push origin HEAD:master
+          git push origin HEAD:main
