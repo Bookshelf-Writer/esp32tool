@@ -1,9 +1,9 @@
-package esp32
+package esp32_old
 
 import (
 	"fmt"
-	"github.com/Bookshelf-Writer/esp32tool/esp32/command"
-	"github.com/Bookshelf-Writer/esp32tool/esp32/portal"
+	"github.com/Bookshelf-Writer/esp32tool/esp32_old/command"
+	"github.com/Bookshelf-Writer/esp32tool/esp32_old/portal"
 	"github.com/Bookshelf-Writer/esp32tool/lib/serial"
 	"time"
 )

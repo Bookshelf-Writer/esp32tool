@@ -1,14 +1,14 @@
 package esp32tool
 
 import (
-	"github.com/Bookshelf-Writer/esp32tool/esp32"
-	"github.com/Bookshelf-Writer/esp32tool/esp32/command"
+	"github.com/Bookshelf-Writer/esp32tool/esp32_old"
+	"github.com/Bookshelf-Writer/esp32tool/esp32_old/command"
 	"github.com/Bookshelf-Writer/esp32tool/lib/output"
 	"github.com/Bookshelf-Writer/esp32tool/lib/serial"
 	"time"
 )
 
-func ConnectEsp32(portPath string, connectBaudrate uint32, transferBaudrate uint32, retries uint, logger *output.LogObj) (*esp32.ESP32ROM, error) {
+func ConnectEsp32(portPath string, connectBaudrate uint32, transferBaudrate uint32, retries uint, logger *output.LogObj) (*esp32_old.ESP32ROM, error) {
 	logger = logger.NewLog("ConnectESP")
 
 	serialPort, err := serial.NewEsp(portPath, int(connectBaudrate))
@@ -17,7 +17,7 @@ func ConnectEsp32(portPath string, connectBaudrate uint32, transferBaudrate uint
 		return nil, err
 	}
 
-	esp := esp32.NewESP32ROM(serialPort, logger)
+	esp := esp32_old.NewESP32ROM(serialPort, logger)
 	err = esp.Connect(retries)
 	if err != nil {
 		logger.Trace().Err(err).Msg("esp32.Connect")
@@ -26,7 +26,7 @@ func ConnectEsp32(portPath string, connectBaudrate uint32, transferBaudrate uint
 
 	//установка скорости подключения
 	{
-		_, err = esp32.CheckExecuteCommand(serialPort,
+		_, err = esp32_old.CheckExecuteCommand(serialPort,
 			command.ChangeBaudRate(transferBaudrate, 0),
 			100*time.Millisecond,
 			3,

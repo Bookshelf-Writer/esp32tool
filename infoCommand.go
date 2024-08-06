@@ -2,7 +2,7 @@ package esp32tool
 
 import (
 	"fmt"
-	"github.com/Bookshelf-Writer/esp32tool/esp32"
+	"github.com/Bookshelf-Writer/esp32tool/esp32_old"
 	"github.com/Bookshelf-Writer/esp32tool/lib/output"
 )
 
@@ -11,10 +11,10 @@ type DeviceInfo struct {
 	Revision   string
 	Features   []string
 	MacAddress string
-	Partitions esp32.PartitionList
+	Partitions esp32_old.PartitionList
 }
 
-func InfoCommand(esp32 *esp32.ESP32ROM, logs *output.LogObj) error {
+func InfoCommand(esp32 *esp32_old.ESP32ROM, logs *output.LogObj) error {
 	macAddress, err := esp32.GetChipMAC()
 	if err != nil {
 		return fmt.Errorf("Could not retrieve MAC address: %s", err.Error())

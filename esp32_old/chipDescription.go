@@ -1,8 +1,8 @@
-package esp32
+package esp32_old
 
 import (
 	"fmt"
-	"github.com/Bookshelf-Writer/esp32tool/esp32/code"
+	"github.com/Bookshelf-Writer/esp32tool/esp32_old/code"
 )
 
 type ChipDescription struct {

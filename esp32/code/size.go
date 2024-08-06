@@ -5,91 +5,108 @@ package code
 type SizeType byte
 
 const (
-	Size256KbJ1 SizeType = 18 //0x12
-	Size512KbJ1 SizeType = 19 //0x13
-	Size1MbJ1   SizeType = 20 //0x14
-	Size2MbJ1   SizeType = 21 //0x15
-	Size4MbJ1   SizeType = 22 //0x16
-	Size8MbJ1   SizeType = 23 //0x17
-	Size16MbJ1  SizeType = 24 //0x18
-	Size32MbJ1  SizeType = 25 //0x19
-	Size64MbJ1  SizeType = 26 //0x1a
-	Size128MbJ1 SizeType = 27 //0x1b
-	Size256MbJ1 SizeType = 28 //0x1c
-
-	Size64MbJ2  SizeType = 32 //0x20
-	Size128MbJ2 SizeType = 33 //0x21
-	Size256MbJ2 SizeType = 34 //0x22
-
-	Size256KbJ3 SizeType = 50 //0x32
-	Size512KbJ3 SizeType = 51 //0x33
-	Size1MbJ3   SizeType = 52 //0x34
-	Size2MbJ3   SizeType = 53 //0x35
-	Size4MbJ3   SizeType = 54 //0x36
-	Size8MbJ3   SizeType = 55 //0x37
-	Size16MbJ3  SizeType = 56 //0x38
-	Size32MbJ3  SizeType = 57 //0x39
-	Size64MbJ3  SizeType = 58 //0x3a
+	SizeUndef SizeType = iota
+	Size256Kb
+	Size512Kb
+	Size1Mb
+	Size2Mb
+	Size4Mb
+	Size8Mb
+	Size16Mb
+	Size32Mb
+	Size64Mb
+	Size128Mb
+	Size256Mb
 )
 
-const (
-	SizeText256KbJ1 = "256Kb J1"
-	SizeText512KbJ1 = "512Kb J1"
-	SizeText1MbJ1   = "1Mb J1"
-	SizeText2MbJ1   = "2Mb J1"
-	SizeText4MbJ1   = "4Mb J1"
-	SizeText8MbJ1   = "8Mb J1"
-	SizeText16MbJ1  = "16Mb J1"
-	SizeText32MbJ1  = "32Mb J1"
-	SizeText64MbJ1  = "64Mb J1"
-	SizeText128MbJ1 = "128Mb J1"
-	SizeText256MbJ1 = "256Mb J1"
-
-	SizeText64MbJ2  = "64Mb J2"
-	SizeText128MbJ2 = "128Mb J2"
-	SizeText256MbJ2 = "256Mb J2"
-
-	SizeText256KbJ3 = "256Kb J3"
-	SizeText512KbJ3 = "512Kb J3"
-	SizeText1MbJ3   = "1Mb J3"
-	SizeText2MbJ3   = "2Mb J3"
-	SizeText4MbJ3   = "4Mb J3"
-	SizeText8MbJ3   = "8Mb J3"
-	SizeText16MbJ3  = "16Mb J3"
-	SizeText32MbJ3  = "32Mb J3"
-	SizeText64MbJ3  = "64Mb J3"
-)
-
-var SizeMap = map[SizeType]string{
-	Size256KbJ1: SizeText256KbJ1,
-	Size512KbJ1: SizeText512KbJ1,
-	Size1MbJ1:   SizeText1MbJ1,
-	Size2MbJ1:   SizeText2MbJ1,
-	Size4MbJ1:   SizeText4MbJ1,
-	Size8MbJ1:   SizeText8MbJ1,
-	Size16MbJ1:  SizeText16MbJ1,
-	Size32MbJ1:  SizeText32MbJ1,
-	Size64MbJ1:  SizeText64MbJ1,
-	Size128MbJ1: SizeText128MbJ1,
-	Size256MbJ1: SizeText256MbJ1,
-	Size64MbJ2:  SizeText64MbJ2,
-	Size128MbJ2: SizeText128MbJ2,
-	Size256MbJ2: SizeText256MbJ2,
-	Size256KbJ3: SizeText256KbJ3,
-	Size512KbJ3: SizeText512KbJ3,
-	Size1MbJ3:   SizeText1MbJ3,
-	Size2MbJ3:   SizeText2MbJ3,
-	Size4MbJ3:   SizeText4MbJ3,
-	Size8MbJ3:   SizeText8MbJ3,
-	Size16MbJ3:  SizeText16MbJ3,
-	Size32MbJ3:  SizeText32MbJ3,
-	Size64MbJ3:  SizeText64MbJ3,
+func SizeDetect(b byte) SizeType {
+	switch b {
+	case 0x12, 0x32:
+		return Size256Kb
+	case 0x13, 0x33:
+		return Size512Kb
+	case 0x14, 0x34:
+		return Size1Mb
+	case 0x15, 0x35:
+		return Size2Mb
+	case 0x16, 0x36:
+		return Size4Mb
+	case 0x17, 0x37:
+		return Size8Mb
+	case 0x18, 0x38:
+		return Size16Mb
+	case 0x19, 0x39:
+		return Size32Mb
+	case 0x20, 0x1A, 0x3A:
+		return Size64Mb
+	case 0x21, 0x1B:
+		return Size128Mb
+	case 0x22, 0x1C:
+		return Size256Mb
+	}
+	return SizeUndef
 }
 
-func (obj SizeType) String() string {
-	val, ok := SizeMap[obj]
-	if ok {
-		return val
+func (t SizeType) String() string {
+	switch t {
+	case Size256Kb:
+		return "256kB"
+	case Size512Kb:
+		return "512kB"
+	case Size1Mb:
+		return "1Mb"
+	case Size2Mb:
+		return "2Mb"
+	case Size4Mb:
+		return "4Mb"
+	case Size8Mb:
+		return "8Mb"
+	case Size16Mb:
+		return "16Mb"
+	case Size32Mb:
+		return "32Mb"
+	case Size64Mb:
+		return "64Mb"
+	case Size128Mb:
+		return "128Mb"
+	case Size256Mb:
+		return "256Mb"
 	}
-	return "Unknown SizeType"
+	return "unknown"
+}
+
+////
+
+const (
+	Byte     = 1
+	Kilobyte = 1024 * Byte
+	Megabyte = 1024 * Kilobyte
+)
+
+func (t SizeType) Size() int {
+	switch t {
+	case Size256Kb:
+		return Kilobyte * 256
+	case Size512Kb:
+		return Kilobyte * 512
+	case Size1Mb:
+		return Megabyte
+	case Size2Mb:
+		return Megabyte * 2
+	case Size4Mb:
+		return Megabyte * 4
+	case Size8Mb:
+		return Megabyte * 8
+	case Size16Mb:
+		return Megabyte * 16
+	case Size32Mb:
+		return Megabyte * 32
+	case Size64Mb:
+		return Megabyte * 64
+	case Size128Mb:
+		return Megabyte * 128
+	case Size256Mb:
+		return Megabyte * 256
+	}
+	return 0
 }

@@ -5,37 +5,71 @@ package code
 type ErrType byte
 
 const (
-	ErrReceivedMessageIsInvalid     ErrType = 5 //0x05
-	ErrFailedToActOnReceivedMessage ErrType = 6 //0x06
-	ErrInvalidCRCInMessage          ErrType = 7 //0x07
+	ErrInvalidMessageReceived           ErrType = 0x05
+	ErrBootloaderFailedToExecuteCommand ErrType = 0x06
+	ErrReceivedMessageHasInvalidCRC     ErrType = 0x07
 
-	ErrFlashWriteError      ErrType = 8  //0x08
-	ErrFlashReadError       ErrType = 9  //0x09
-	ErrFlashReadLengthError ErrType = 10 //0x0a
+	ErrBootloaderFailedToWriteToFlash  ErrType = 0x08
+	ErrBootloaderFailedToReadFromFlash ErrType = 0x09
+	ErrInvalidLengthForFlashRead       ErrType = 0x0a
+	ErrMalformedCompressedDataReceived ErrType = 0x0b
 
-	ErrDeflateError ErrType = 11 //0x0b
+	ErrBadDataLength   ErrType = 0xc0
+	ErrBadDataChecksum ErrType = 0xc1
+	ErrBadBlockSize    ErrType = 0xc2
+	ErrInvalidCommand  ErrType = 0xc3
+
+	ErrSPIOperationFailed ErrType = 0xc4
+	ErrSPIUnlockFailed    ErrType = 0xc5
+
+	ErrErrorWhenUncompressingTheData ErrType = 0xc7
+	ErrDidntReceiveEnoughData        ErrType = 0xc8
+	ErrReceivedTooMuchData           ErrType = 0xc9
+	ErrOther                         ErrType = 0xff
 )
 
 const (
-	ErrTextReceivedMessageIsInvalid     = "Received message is invalid"
-	ErrTextFailedToActOnReceivedMessage = "Failed to act on received message"
-	ErrTextInvalidCRCInMessage          = "Invalid CRC in message"
+	ErrTextInvalidMessageReceived           = "Invalid message received"
+	ErrTextBootloaderFailedToExecuteCommand = "Bootloader failed to execute command"
+	ErrTextReceivedMessageHasInvalidCRC     = "Received message has invalid CRC"
 
-	ErrTextFlashWriteError      = "Flash write error"
-	ErrTextFlashReadError       = "Flash read error"
-	ErrTextFlashReadLengthError = "Flash read length error"
+	ErrTextBootloaderFailedToWriteToFlash  = "Bootloader failed to write to flash"
+	ErrTextBootloaderFailedToReadFromFlash = "Bootloader failed to read from flash"
+	ErrTextInvalidLengthForFlashRead       = "Invalid length for flash read"
+	ErrTextMalformedCompressedDataReceived = "Malformed compressed data received"
 
-	ErrTextDeflateError = "Deflate error"
+	ErrTextBadDataLength   = "Bad data length"
+	ErrTextBadDataChecksum = "Bad data checksum"
+	ErrTextBadBlockSize    = "Bad block size"
+	ErrTextInvalidCommand  = "Invalid command"
+
+	ErrTextSPIOperationFailed = "SPI operation failed"
+	ErrTextSPIUnlockFailed    = "SPI unlock failed"
+
+	ErrTextErrorWhenUncompressingTheData = "Error when uncompressing the data"
+	ErrTextDidntReceiveEnoughData        = "Didn't receive enough data"
+	ErrTextReceivedTooMuchData           = "Received too much data"
+	ErrTextOther                         = "Other"
 )
 
 var ErrMap = map[ErrType]string{
-	ErrReceivedMessageIsInvalid:     ErrTextReceivedMessageIsInvalid,
-	ErrFailedToActOnReceivedMessage: ErrTextFailedToActOnReceivedMessage,
-	ErrInvalidCRCInMessage:          ErrTextInvalidCRCInMessage,
-	ErrFlashWriteError:              ErrTextFlashWriteError,
-	ErrFlashReadError:               ErrTextFlashReadError,
-	ErrFlashReadLengthError:         ErrTextFlashReadLengthError,
-	ErrDeflateError:                 ErrTextDeflateError,
+	ErrInvalidMessageReceived:           ErrTextInvalidMessageReceived,
+	ErrBootloaderFailedToExecuteCommand: ErrTextBootloaderFailedToExecuteCommand,
+	ErrReceivedMessageHasInvalidCRC:     ErrTextReceivedMessageHasInvalidCRC,
+	ErrBootloaderFailedToWriteToFlash:   ErrTextBootloaderFailedToWriteToFlash,
+	ErrBootloaderFailedToReadFromFlash:  ErrTextBootloaderFailedToReadFromFlash,
+	ErrInvalidLengthForFlashRead:        ErrTextInvalidLengthForFlashRead,
+	ErrMalformedCompressedDataReceived:  ErrTextMalformedCompressedDataReceived,
+	ErrBadDataLength:                    ErrTextBadDataLength,
+	ErrBadDataChecksum:                  ErrTextBadDataChecksum,
+	ErrBadBlockSize:                     ErrTextBadBlockSize,
+	ErrInvalidCommand:                   ErrTextInvalidCommand,
+	ErrSPIOperationFailed:               ErrTextSPIOperationFailed,
+	ErrSPIUnlockFailed:                  ErrTextSPIUnlockFailed,
+	ErrErrorWhenUncompressingTheData:    ErrTextErrorWhenUncompressingTheData,
+	ErrDidntReceiveEnoughData:           ErrTextDidntReceiveEnoughData,
+	ErrReceivedTooMuchData:              ErrTextReceivedTooMuchData,
+	ErrOther:                            ErrTextOther,
 }
 
 func (obj ErrType) String() string {
@@ -44,4 +78,12 @@ func (obj ErrType) String() string {
 		return val
 	}
 	return "Unknown ErrType"
+}
+
+func ErrorDetect(b byte) ErrType {
+	_, ok := ErrMap[ErrType(b)]
+	if ok {
+		return ErrOther
+	}
+	return ErrType(b)
 }

@@ -1,10 +1,10 @@
-package esp32
+package esp32_old
 
 import (
 	"bytes"
 	"compress/zlib"
 	"fmt"
-	"github.com/Bookshelf-Writer/esp32tool/esp32/command"
+	"github.com/Bookshelf-Writer/esp32tool/esp32_old/command"
 	"time"
 )
 
