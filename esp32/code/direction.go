@@ -1,8 +1,8 @@
 package code
 
-type DirectionType byte
+//###########################################################//
 
 const (
-	DirectionRequest  DirectionType = 0x00
-	DirectionResponse DirectionType = 0x01
+	DirectionRequest  byte = 0x00
+	DirectionResponse byte = 0x01
 )

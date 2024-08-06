@@ -47,34 +47,6 @@ func SizeDetect(b byte) SizeType {
 	return SizeUndef
 }
 
-func (t SizeType) String() string {
-	switch t {
-	case Size256Kb:
-		return "256kB"
-	case Size512Kb:
-		return "512kB"
-	case Size1Mb:
-		return "1Mb"
-	case Size2Mb:
-		return "2Mb"
-	case Size4Mb:
-		return "4Mb"
-	case Size8Mb:
-		return "8Mb"
-	case Size16Mb:
-		return "16Mb"
-	case Size32Mb:
-		return "32Mb"
-	case Size64Mb:
-		return "64Mb"
-	case Size128Mb:
-		return "128Mb"
-	case Size256Mb:
-		return "256Mb"
-	}
-	return "unknown"
-}
-
 ////
 
 const (
@@ -83,30 +55,37 @@ const (
 	Megabyte = 1024 * Kilobyte
 )
 
+type SizeMapObj struct {
+	String string
+	Size   int
+}
+
+var SizeMap = map[SizeType]SizeMapObj{
+	Size256Kb: {"256kB", Kilobyte * 256},
+	Size512Kb: {"512kB", Kilobyte * 512},
+	Size1Mb:   {"1Mb", Megabyte},
+	Size2Mb:   {"2Mb", Megabyte * 2},
+	Size4Mb:   {"4Mb", Megabyte * 4},
+	Size8Mb:   {"8Mb", Megabyte * 8},
+	Size16Mb:  {"16Mb", Megabyte * 16},
+	Size32Mb:  {"32Mb", Megabyte * 32},
+	Size64Mb:  {"64Mb", Megabyte * 64},
+	Size128Mb: {"128Mb", Megabyte * 128},
+	Size256Mb: {"256Mb", Megabyte * 256},
+}
+
+func (t SizeType) String() string {
+	str, ok := SizeMap[t]
+	if ok {
+		return str.String
+	}
+	return "unknown"
+}
+
 func (t SizeType) Size() int {
-	switch t {
-	case Size256Kb:
-		return Kilobyte * 256
-	case Size512Kb:
-		return Kilobyte * 512
-	case Size1Mb:
-		return Megabyte
-	case Size2Mb:
-		return Megabyte * 2
-	case Size4Mb:
-		return Megabyte * 4
-	case Size8Mb:
-		return Megabyte * 8
-	case Size16Mb:
-		return Megabyte * 16
-	case Size32Mb:
-		return Megabyte * 32
-	case Size64Mb:
-		return Megabyte * 64
-	case Size128Mb:
-		return Megabyte * 128
-	case Size256Mb:
-		return Megabyte * 256
+	num, ok := SizeMap[t]
+	if ok {
+		return num.Size
 	}
 	return 0
 }
