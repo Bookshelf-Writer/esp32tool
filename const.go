@@ -3,10 +3,10 @@ package esp32tool
 const (
 	GlobalName       string = "esp32tool"
 	GlobalDateUpdate string = "08-05-2024"
-	GlobalHash       string = "264a4043bde25c79993f6ac9b60d3b235ffd6f6d"
+	GlobalHash       string = "333ca320806c8cdda95163116324b07cadca6eff"
 
-	GlobalVersion      string = "v0.1.1"
+	GlobalVersion      string = "v0.1.2"
 	GlobalVersionMajor string = "v0"
 	GlobalVersionMinor uint16 = 1
-	GlobalVersionPatch uint16 = 1
+	GlobalVersionPatch uint16 = 2
 )
