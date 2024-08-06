@@ -178,8 +178,10 @@ func TestSlipCode(t *testing.T) {
 
 	//
 
-	val.Add(0xC0, "Header")
-	val.Add(0xDB, "Escape Char")
+	val.Add(0xC0, "End")
+	val.Add(0xDB, "Esc")
+	val.Add(0xDC, "Esc End")
+	val.Add(0xDD, "Esc Esc")
 
 	//
 

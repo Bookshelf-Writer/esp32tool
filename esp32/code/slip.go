@@ -9,18 +9,24 @@ func (obj SlipType) Byte() byte {
 }
 
 const (
-	SlipHeader     SlipType = 192 //0xc0
-	SlipEscapeChar SlipType = 219 //0xdb
+	SlipEnd    SlipType = 192 //0xc0
+	SlipEsc    SlipType = 219 //0xdb
+	SlipEscEnd SlipType = 220 //0xdc
+	SlipEscEsc SlipType = 221 //0xdd
 )
 
 const (
-	SlipTextHeader     = "Header"
-	SlipTextEscapeChar = "Escape Char"
+	SlipTextEnd    = "End"
+	SlipTextEsc    = "Esc"
+	SlipTextEscEnd = "Esc End"
+	SlipTextEscEsc = "Esc Esc"
 )
 
 var SlipMap = map[SlipType]string{
-	SlipHeader:     SlipTextHeader,
-	SlipEscapeChar: SlipTextEscapeChar,
+	SlipEnd:    SlipTextEnd,
+	SlipEsc:    SlipTextEsc,
+	SlipEscEnd: SlipTextEscEnd,
+	SlipEscEsc: SlipTextEscEsc,
 }
 
 func (obj SlipType) String() string {

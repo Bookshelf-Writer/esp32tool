@@ -9,20 +9,20 @@ import (
 
 func encode(data []byte) []byte {
 	var buf bytes.Buffer
-	buf.WriteByte(code.SlipHeader.Byte())
+	buf.WriteByte(code.SlipEnd.Byte())
 
 	for _, b := range data {
 		switch b {
-		case code.SlipEscapeChar.Byte():
-			buf.Write([]byte{code.SlipEscapeChar.Byte(), 0xDD})
-		case code.SlipHeader.Byte():
-			buf.Write([]byte{code.SlipEscapeChar.Byte(), 0xDC})
+		case code.SlipEsc.Byte():
+			buf.Write([]byte{code.SlipEsc.Byte(), code.SlipEscEsc.Byte()})
+		case code.SlipEnd.Byte():
+			buf.Write([]byte{code.SlipEsc.Byte(), code.SlipEscEnd.Byte()})
 		default:
 			buf.WriteByte(b)
 		}
 
 	}
 
-	buf.WriteByte(code.SlipHeader.Byte())
+	buf.WriteByte(code.SlipEnd.Byte())
 	return buf.Bytes()
 }

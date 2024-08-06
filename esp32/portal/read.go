@@ -39,16 +39,16 @@ func Read(port *serial.SerialObj, timeout time.Duration) ([]byte, error) {
 		switch state {
 
 		case code.StateWaitingHeader:
-			if byteBuf[0] == code.SlipHeader.Byte() {
+			if byteBuf[0] == code.SlipEnd.Byte() {
 				state = code.StateReadingContent
 			}
 
 		case code.StateReadingContent:
 			switch byteBuf[0] {
-			case code.SlipHeader.Byte():
+			case code.SlipEnd.Byte():
 				return buf.Bytes(), nil
 
-			case code.SlipEscapeChar.Byte():
+			case code.SlipEsc.Byte():
 				state = code.StateInEscape
 			default:
 				buf.WriteByte(byteBuf[0])
@@ -57,10 +57,10 @@ func Read(port *serial.SerialObj, timeout time.Duration) ([]byte, error) {
 		case code.StateInEscape:
 			switch byteBuf[0] {
 			case 0xDC:
-				buf.WriteByte(code.SlipHeader.Byte())
+				buf.WriteByte(code.SlipEnd.Byte())
 				state = code.StateReadingContent
 			case 0xDD:
-				buf.WriteByte(code.SlipEscapeChar.Byte())
+				buf.WriteByte(code.SlipEsc.Byte())
 				state = code.StateReadingContent
 			default:
 				return nil, ErrUnexpectedChar
