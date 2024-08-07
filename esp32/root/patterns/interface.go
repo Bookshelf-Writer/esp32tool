@@ -1,13 +1,15 @@
-package root
+package patterns
 
-import "github.com/Bookshelf-Writer/esp32tool/esp32/code"
+import (
+	"github.com/Bookshelf-Writer/esp32tool/esp32/code"
+)
 
 //###########################################################//
 
 type EspInterface interface {
-	GetMagicValues() []uint32
+	MagicValues() []uint32
+	Name() string
 
 	GetFrequency() code.FrequencyType
 	GetSize() code.SizeType
-	GetName() string
 }
