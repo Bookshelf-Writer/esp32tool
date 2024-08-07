@@ -5,6 +5,7 @@ package root
 import (
 	"github.com/Bookshelf-Writer/esp32tool/esp32/root/branch/esp32"
 	"github.com/Bookshelf-Writer/esp32tool/esp32/root/branch/esp32c2"
+	"github.com/Bookshelf-Writer/esp32tool/esp32/root/branch/esp32c3"
 	"github.com/Bookshelf-Writer/esp32tool/esp32/root/branch/esp32c6"
 	"github.com/Bookshelf-Writer/esp32tool/esp32/root/branch/esp32h2"
 	"github.com/Bookshelf-Writer/esp32tool/esp32/root/branch/esp32p4"
@@ -25,6 +26,9 @@ func init() {
 	}
 	for _, key := range esp32c2.MagicValues {
 		MagicMap[key] = esp32c2.Init
+	}
+	for _, key := range esp32c3.MagicValues {
+		MagicMap[key] = esp32c3.Init
 	}
 	for _, key := range esp32c6.MagicValues {
 		MagicMap[key] = esp32c6.Init
